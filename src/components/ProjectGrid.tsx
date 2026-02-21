@@ -46,7 +46,7 @@ export default function ProjectGrid() {
     const bottomRow = [
         { title: "Studio recording and mixing", category: "Professional recording sessions shaped for clarity and depth.", src: "assets/images/studio_recording.jpg" },
         { title: "Funeral choir", category: "Choral services for funerals and memorial services.", src: "assets/images/Funeral_choir.jpg" },
-        { title: "Tones and Rhythms", category: "Original compositions, sound design and textural arrangements.", src: "assets/images/tones_rhythms.jpg" },
+        { title: "Tones and Rhythms", category: "Studio-sampled tones and rhythms", src: "assets/images/tones_rhythms.jpg" },
         { title: "Corporate Events", category: "Live audio production and sound curation for conferences and enterprise gatherings.", src: "assets/images/corporate_events.jpg" },
     ];
 
