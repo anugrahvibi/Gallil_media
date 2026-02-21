@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+:root {
+  /* Fiasco-inspired Palette */
+  --background: #F8F7F4;
+  --foreground: #111111;
+  --fiasco-yellow: #fffb7a; /* Keeping if needed, but primary is BW */
+  --warm-ivory: #F8F7F4;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-fiasco-yellow: var(--fiasco-yellow);
+  --color-warm-ivory: var(--warm-ivory);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-playfair), "Times New Roman", serif;
+  --font-manrope: var(--font-manrope), sans-serif;
+  --font-inter: var(--font-inter), sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-inter {
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* GSAP/Lenis Utilities */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
