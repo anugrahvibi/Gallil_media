@@ -39,7 +39,7 @@ export default function ProjectGrid() {
     const topRow = [
         projects.find(p => p.title === "Live Fusion"),
         projects.find(p => p.title === "Sound Studio"),
-        { title: "Church choir", category: "Choral services for weddings and liturgical ceremonies.", src: "assets/images/Church_choir_01.png" },
+        { title: "Church choir", category: "Choral services for weddings and liturgical ceremonies.", src: "assets/images/church_choir_01.png" },
     ].filter(Boolean);
 
     // Bottom row: 4 tiles

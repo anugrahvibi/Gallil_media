@@ -95,7 +95,7 @@ export default function FounderSection() {
                             className="w-full h-full relative"
                         >
                             <Image
-                                src="/assets/images/Vibi.png"
+                                src="/assets/images/VIBI.png"
                                 alt="Founder of Gallil Media"
                                 fill
                                 className="object-cover"
