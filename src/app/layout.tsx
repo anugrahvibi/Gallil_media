@@ -40,7 +40,7 @@ import ChatWithUs from "@/components/floating/chat-with-us";
 // ... existing imports
 
 export const metadata: Metadata = {
-  title: "Fiasco Replica",
+  title: "Gallil Media",
   description: "A interaction scaffold.",
 };
 
