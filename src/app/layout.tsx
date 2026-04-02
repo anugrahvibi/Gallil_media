@@ -32,17 +32,15 @@ const inter = Inter({
 });
 
 import ServicesTransition from "@/components/ServicesTransition";
-
-// ... existing imports
-
 import ChatWithUs from "@/components/floating/chat-with-us";
 import ScrollToTop from "@/components/floating/ScrollToTop";
-
-// ... existing imports
 
 export const metadata: Metadata = {
   title: "Gallil Media",
   description: "A interaction scaffold.",
+  verification: {
+    google: "UCJ59N0Rp9pD1nQt2ctiQWTA_yCOdJWW-XLRvAS9HvE",
+  },
 };
 
 export default function RootLayout({
