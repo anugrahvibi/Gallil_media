@@ -36,6 +36,7 @@ import ServicesTransition from "@/components/ServicesTransition";
 // ... existing imports
 
 import ChatWithUs from "@/components/floating/chat-with-us";
+import ScrollToTop from "@/components/floating/ScrollToTop";
 
 // ... existing imports
 
@@ -63,6 +64,7 @@ export default function RootLayout({
               <Navigation />
               {children}
               <ChatWithUs />
+              <ScrollToTop />
             </AnimationProvider>
           </SmoothScroll>
         </div>
