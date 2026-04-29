@@ -6,10 +6,10 @@ import { useImageMaskReveal } from '@/hooks/useImageMaskReveal';
 
 // Sound Studio Projects
 const projects = [
-    { title: "Church choir", category: "Choral services for weddings and liturgical ceremonies.", src: "assets/images/church_choir_01.png" },
-    { title: "Funeral Choir", category: "Sound Design", src: "assets/images/funeral_choir.jpg" },
-    { title: "Live Fusion", category: "Live performance mastering for stage and broadcast.", src: "assets/images/live_fusion.jpg" },
-    { title: "Sound Studio", category: "Music production and studio recording services.", src: "assets/images/sound_studio.jpg" },
+    { title: "Church choir", category: "Choral services for weddings and liturgical ceremonies.", src: "/assets/images/church_choir_02.jpg" },
+    { title: "Funeral Choir", category: "Sound Design", src: "/assets/images/funeral_choir.jpg" },
+    { title: "Live Fusion", category: "Live performance mastering for stage and broadcast.", src: "/assets/images/live_fusion.jpg" },
+    { title: "Sound Studio", category: "Music production and studio recording services.", src: "/assets/images/sound_studio.jpg" },
 ];
 
 function ProjectCard({ project, index, className }: { project: any, index: number, className?: string }) {
@@ -39,15 +39,15 @@ export default function ProjectGrid() {
     const topRow = [
         projects.find(p => p.title === "Live Fusion"),
         projects.find(p => p.title === "Sound Studio"),
-        { title: "Church choir", category: "Choral services for weddings and liturgical ceremonies.", src: "assets/images/church_choir_01.png" },
+        { title: "Church choir", category: "Choral services for weddings and liturgical ceremonies.", src: "/assets/images/church_choir_02.jpg" },
     ].filter(Boolean);
 
     // Bottom row: 4 tiles
     const bottomRow = [
-        { title: "Studio recording and mixing", category: "Professional recording sessions shaped for clarity and depth.", src: "assets/images/studio_recording.jpg" },
-        { title: "Funeral choir", category: "Choral services for funerals and memorial services.", src: "assets/images/Funeral_choir.jpg" },
-        { title: "Tones and Rhythms", category: "User tones & styles for Korg PA series and Yamaha PSR series", src: "assets/images/tones_rhythms.jpg" },
-        { title: "Corporate Events", category: "Live audio production and sound curation for conferences and enterprise gatherings.", src: "assets/images/corporate_events.jpg" },
+        { title: "Studio recording and mixing", category: "Professional recording sessions shaped for clarity and depth.", src: "/assets/images/studio_recording.jpg" },
+        { title: "Funeral choir", category: "Choral services for funerals and memorial services.", src: "/assets/images/Funeral_choir.jpg" },
+        { title: "Tones and Rhythms", category: "User tones & styles for Korg PA series and Yamaha PSR series", src: "/assets/images/tones_rhythms.jpg" },
+        { title: "Corporate Events", category: "Live audio production and sound curation for conferences and enterprise gatherings.", src: "/assets/images/corporate_events.jpg" },
     ];
 
     return (
