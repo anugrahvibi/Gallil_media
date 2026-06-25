@@ -5,6 +5,7 @@ import SmoothScroll from "@/components/providers/SmoothScroll";
 import Navigation from "@/components/Navigation";
 import { AnimationProvider } from "@/components/providers/AnimationContext";
 import GlobalParticles from "@/components/GlobalParticles";
+import Preloader from "@/components/Preloader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,6 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-import ServicesTransition from "@/components/ServicesTransition";
 import ChatWithUs from "@/components/floating/chat-with-us";
 import ScrollToTop from "@/components/floating/ScrollToTop";
 
@@ -58,7 +58,7 @@ export default function RootLayout({
         <div className="relative z-[2]">
           <SmoothScroll>
             <AnimationProvider>
-              <ServicesTransition />
+              <Preloader />
               <Navigation />
               {children}
               <ChatWithUs />

@@ -56,8 +56,18 @@ export default function FounderSection() {
                             }}
                             className="font-serif text-3xl md:text-4xl text-neutral-800 leading-tight mb-8 font-normal"
                         >
-                            A lifelong respect for sound and the moments it serves.
+                            35 years of music. A lifelong respect for the moments it serves.
                         </motion.h2>
+
+                        <motion.span
+                            variants={{
+                                hidden: { opacity: 0, y: 12 },
+                                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+                            }}
+                            className="text-xs md:text-sm font-medium tracking-widest text-neutral-500 uppercase mb-6 block"
+                        >
+                            3× KERALA STATE CHAMPION
+                        </motion.span>
 
                         {/* Body Copy */}
                         <motion.div
@@ -68,13 +78,13 @@ export default function FounderSection() {
                             className="text-neutral-600 text-lg leading-relaxed space-y-6"
                         >
                             <p>
-                                With decades of experience in music and audio production, Gallil Media was shaped by a simple idea — sound should support the moment, not overwhelm it.
+                                With over 35 years of experience in music, audio production, and live sound, Gallil Media was shaped by a simple idea — sound should support the moment, not overwhelm it.
                             </p>
                             <p>
-                                Trained across classical and contemporary traditions, the work bridges ceremony and craft with care and restraint.
+                                Trained across classical and contemporary traditions, the work bridges ceremony and craft with care and restraint. Whether in a studio session or a sacred space, every project is guided by the same intention: listen first, prepare quietly, and serve the moment with respect.
                             </p>
                             <p>
-                                Every project is approached with the same intention: listen first, prepare quietly, and serve the moment with respect.
+                                Every service we offer — from studio recordings to choir programmes — carries that same standard.
                             </p>
                         </motion.div>
                     </motion.div>
