@@ -103,7 +103,7 @@ export default function PersonalisedServiceSection() {
                             <div
                                 className="w-full"
                                 style={{
-                                    borderTop: "0.5px solid rgba(17, 17, 17, 0.1)",
+                                    borderTop: "0.5px solid #FFEA00",
                                     marginBottom: "12px",
                                 }}
                             />
@@ -154,31 +154,35 @@ export default function PersonalisedServiceSection() {
                                             }}
                                         >
                                             <div className="flex justify-between items-center w-full">
-                                                <span className="font-inter text-xs md:text-sm tracking-wider uppercase text-neutral-500">
+                                                <span
+                                                    className="font-inter text-xs md:text-sm tracking-wider uppercase text-neutral-500"
+                                                    style={{ fontWeight: 500, cursor: "pointer" }}
+                                                    onClick={() => handlePlayPause(track.id)}
+                                                >
                                                     {track.name}
                                                 </span>
                                                 <button
                                                     onClick={() => handlePlayPause(track.id)}
-                                                    className="flex items-center justify-center rounded-full transition-colors hover:bg-black/[0.02]"
+                                                    className="flex items-center justify-center rounded-full transition-opacity hover:opacity-80"
                                                     style={{
                                                         width: "28px",
                                                         height: "28px",
-                                                        border: "0.5px solid rgba(17, 17, 17, 0.3)",
-                                                        color: "rgba(17, 17, 17, 0.6)",
+                                                        border: "none",
+                                                        color: "#000000",
                                                         padding: 0,
-                                                        backgroundColor: "transparent",
+                                                        backgroundColor: "#FFEA00",
                                                         cursor: "pointer",
                                                     }}
                                                     aria-label={isPlaying ? `Pause ${track.name}` : `Play ${track.name}`}
                                                 >
                                                     {isPlaying ? (
                                                         <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect width="2" height="6" fill="currentColor" />
-                                                            <rect x="4" width="2" height="6" fill="currentColor" />
+                                                            <rect width="2" height="6" fill="#000000" />
+                                                            <rect x="4" width="2" height="6" fill="#000000" />
                                                         </svg>
                                                     ) : (
                                                         <svg width="6" height="7" viewBox="0 0 6 7" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: "1px" }}>
-                                                            <path d="M6 3.5L0 7V0L6 3.5Z" fill="currentColor" />
+                                                            <path d="M6 3.5L0 7V0L6 3.5Z" fill="#000000" />
                                                         </svg>
                                                     )}
                                                 </button>

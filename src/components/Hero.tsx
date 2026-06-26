@@ -94,7 +94,7 @@ export default function Hero() {
                 >
                     GALLIL MEDIA
                     <span
-                        className="inline-block w-[0.12em] h-[0.12em] rounded-full bg-[#FFEA00] ml-[0.1em] align-baseline relative -top-[0.15em]"
+                        className="block md:inline-block w-[0.12em] h-[0.12em] rounded-full bg-[#FFEA00] mx-auto mt-3 md:mt-0 md:ml-[0.1em] md:align-baseline md:relative md:-top-[0.15em]"
                         aria-hidden="true"
                     />
                 </h1>

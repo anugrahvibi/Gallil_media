@@ -32,7 +32,21 @@ export default function ContactSection() {
     };
 
     return (
-        <footer className="w-full bg-background text-foreground pt-20 pb-8 px-6 md:px-12 overflow-hidden" id="contact">
+        <footer className="w-full pt-32 pb-8 px-6 md:px-12 overflow-hidden relative" style={{ backgroundColor: "#1d1e19", color: "#ffffff" }} id="contact">
+            {/* Top curve — CSS border-radius, scales correctly on all screen sizes */}
+            <div
+                className="absolute top-0 left-0 w-full pointer-events-none"
+                style={{ height: "80px", marginTop: "-1px" }}
+            >
+                <div
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "#F8F7F4",
+                        borderRadius: "0 0 40px 40px",
+                    }}
+                />
+            </div>
             <div className="container mx-auto">
                 {/* Top Section: Work with us */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-baseline mb-16 md:mb-24">
@@ -68,13 +82,13 @@ export default function ContactSection() {
                     </div>
                 </div>
 
-                <div className="w-full h-px bg-neutral-200 mb-12" />
+                <div className="w-full h-px mb-12" style={{ backgroundColor: "rgba(255,255,255,0.12)" }} />
 
                 {/* Middle Section: Sitemap & Socials */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-24 md:mb-32">
                     {/* Sitemap */}
                     <div className="col-span-1">
-                        <h3 className="text-sm font-bold uppercase tracking-widest mb-6 text-neutral-500">
+                        <h3 className="text-sm font-bold uppercase tracking-widest mb-6" style={{ color: "rgba(255,255,255,0.45)" }}>
                             Sitemap
                         </h3>
                         <ul className="flex flex-col space-y-3">
@@ -88,7 +102,8 @@ export default function ContactSection() {
                                 >
                                     <Link
                                         href={link.href}
-                                        className="text-lg font-medium text-neutral-800 hover:text-black transition-colors"
+                                        className="text-lg font-medium transition-colors"
+                                        style={{ color: "rgba(255,255,255,0.8)" }}
                                     >
                                         {link.name}
                                     </Link>
@@ -99,7 +114,7 @@ export default function ContactSection() {
 
                     {/* Socials */}
                     <div className="col-span-1">
-                        <h3 className="text-sm font-bold uppercase tracking-widest mb-6 text-neutral-500">
+                        <h3 className="text-sm font-bold uppercase tracking-widest mb-6" style={{ color: "rgba(255,255,255,0.45)" }}>
                             Socials
                         </h3>
                         <ul className="flex flex-col space-y-3">
@@ -115,7 +130,8 @@ export default function ContactSection() {
                                         href={link.href}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="text-lg font-medium text-neutral-800 hover:text-black transition-colors"
+                                        className="text-lg font-medium transition-colors"
+                                        style={{ color: "rgba(255,255,255,0.8)" }}
                                     >
                                         {link.name}
                                     </a>
@@ -137,7 +153,7 @@ export default function ContactSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                            className="text-[12vw] md:text-[14vw] leading-[0.8] font-bold tracking-tighter text-black mix-blend-difference md:mix-blend-normal select-none"
+                            className="text-[12vw] md:text-[14vw] leading-[0.8] font-bold tracking-tighter text-white select-none"
                         >
                             GALLIL MEDIA
                         </motion.h1>
@@ -151,7 +167,7 @@ export default function ContactSection() {
                         >
                             Back to top ↑
                         </button>
-                        <p className="text-sm text-neutral-500">
+                        <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
                             Copyright © Gallil Media {new Date().getFullYear()}
                         </p>
                     </div>

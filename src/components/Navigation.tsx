@@ -158,47 +158,52 @@ export default function Navigation() {
                 {/* Mobile Menu Overlay */}
                 <div
                     ref={menuRef}
-                    className="fixed inset-0 z-40 flex h-screen w-full flex-col justify-end bg-[#F8F7F4] p-6 pb-12 translate-y-[-100%]"
+                    className="fixed inset-0 z-40 flex h-screen w-full flex-col bg-[#FFEA00] translate-y-[-100%]"
                 >
-                    <div className="flex flex-col gap-6">
-                        {["Services", "About", "Contact"].map((label, i) => (
-                            label === "Services" ? (
-                                <span
-                                    key={i}
-                                    onClick={handleServicesClick}
-                                    className="mobile-link text-5xl font-serif font-normal tracking-tight text-[#111111] md:text-7xl cursor-pointer"
-                                >
-                                    {label}
-                                </span>
-                            ) : label === "About" ? (
-                                <span
-                                    key={i}
-                                    onClick={handleAboutClick}
-                                    className="mobile-link text-5xl font-serif font-normal tracking-tight text-[#111111] md:text-7xl cursor-pointer"
-                                >
-                                    {label}
-                                </span>
-                            ) : (
-                                <span
-                                    key={i}
-                                    onClick={handleContactClick}
-                                    className="mobile-link text-5xl font-serif font-normal tracking-tight text-[#111111] md:text-7xl cursor-pointer"
-                                >
-                                    {label}
-                                </span>
-                            )
+                    {/* Spacer — pushes nav items to ~40% from top */}
+                    <div className="flex-[2]" />
+
+                    {/* Nav items — flush left with 48px left padding */}
+                    <div className="flex flex-col pl-12 pr-6">
+                        {[
+                            { label: "Services", handler: handleServicesClick },
+                            { label: "About",    handler: handleAboutClick    },
+                            { label: "Contact",  handler: handleContactClick  },
+                        ].map(({ label, handler }, i) => (
+                            <span
+                                key={i}
+                                onClick={handler}
+                                className="mobile-link font-inter font-bold text-[#000000] block w-full cursor-pointer select-none no-underline"
+                                style={{
+                                    fontSize: "52px",
+                                    lineHeight: 1.1,
+                                    letterSpacing: "-0.02em",
+                                    padding: "16px 0",
+                                }}
+                            >
+                                {label}
+                            </span>
                         ))}
                         <Link
                             href="/media"
                             onClick={() => { if (isOpen) toggleMenu(); }}
-                            className="mobile-link text-5xl font-serif font-normal tracking-tight text-[#111111] md:text-7xl cursor-pointer"
+                            className="mobile-link font-inter font-bold text-[#000000] block w-full cursor-pointer select-none no-underline"
+                            style={{
+                                fontSize: "52px",
+                                lineHeight: 1.1,
+                                letterSpacing: "-0.02em",
+                                padding: "16px 0",
+                            }}
                         >
                             Media
                         </Link>
                     </div>
 
-                    {/* Mobile Clock */}
-                    <div className="mt-12 text-sm font-medium text-[#111111]/60 mobile-link font-inter">
+                    {/* Spacer — pushes clock to bottom */}
+                    <div className="flex-[1]" />
+
+                    {/* Mobile Clock — bottom left */}
+                    <div className="mobile-link font-inter text-sm font-medium text-[#000000] pl-12 pb-12">
                         <ISTClock />
                     </div>
                 </div>

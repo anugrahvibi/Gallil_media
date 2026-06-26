@@ -118,8 +118,10 @@ export default function TonesRhythmsSection() {
                                             rel="noopener noreferrer"
                                             className="flex justify-between items-center w-full group transition-colors duration-150 ease-in-out text-neutral-500 hover:text-[#111111]"
                                             style={{
-                                                paddingTop: "10px",
-                                                paddingBottom: "10px",
+                                                paddingTop: "14px",
+                                                paddingBottom: "14px",
+                                                paddingLeft: "12px",
+                                                borderLeft: "2px solid #FFEA00",
                                                 borderBottom: isLast ? "none" : "0.5px solid rgba(17, 17, 17, 0.04)",
                                                 textDecoration: "none",
                                             }}
@@ -127,7 +129,7 @@ export default function TonesRhythmsSection() {
                                             <span className="text-sm uppercase tracking-wider transition-colors duration-150 ease-in-out font-inter">
                                                 {playlist.name}
                                             </span>
-                                            <span className="text-sm transition-colors duration-150 ease-in-out font-inter">
+                                            <span className="text-base transition-colors duration-150 ease-in-out font-inter" style={{ color: "#000000", fontWeight: 700 }}>
                                                 ↗
                                             </span>
                                         </a>
