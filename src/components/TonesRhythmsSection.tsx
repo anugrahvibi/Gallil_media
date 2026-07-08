@@ -18,6 +18,8 @@ const PLAYLISTS = [
     { name: "KORG PA SOFT RHYTHMS", url: "https://youtube.com/playlist?list=PL4o53tBouU7I7ayPqVGmU3uAGZBPjIGbL" },
     { name: "KORG PA TONES", url: "https://youtube.com/playlist?list=PL4o53tBouU7J9_nhkaF7YjArLFgyf5oJw" },
     { name: "KORG PA5X FUSION RHYTHMS", url: "https://youtube.com/playlist?list=PL4o53tBouU7IRg5k-fJN6Uql9lUignP0s" },
+    { name: "YAMAHA PSR FUSION STYLES", url: "https://youtube.com/playlist?list=PLfj7BOzrs5YA&si=xRvgIQ9IIcXP3GY7" },
+    { name: "YAMAHA PSR SOFT STYLES", url: "https://youtube.com/playlist?list=PLO7530MqrPd8&si=DOcu2K1d3OScQGVI" },
 ];
 
 export default function TonesRhythmsSection() {
