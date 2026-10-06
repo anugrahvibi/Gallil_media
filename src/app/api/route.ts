@@ -6,8 +6,9 @@ const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const PRIMARY_MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
 const FALLBACK_MODELS = [
   PRIMARY_MODEL,
-  "llama-3.3-70b-versatile",
   "llama-3.1-8b-instant",
+  "gemma2-9b-it",
+  "llama3-70b-8192",
 ].filter((v, i, a) => a.indexOf(v) === i); // deduplicate
 
 async function queryGroq(prompt: string): Promise<Response> {
@@ -63,15 +64,10 @@ async function queryGroq(prompt: string): Promise<Response> {
         });
       }
 
-      // If rate limited or server error, record error and try fallback model
+      // If failed (rate limit, model not found, overload, etc.), log and try next fallback
       const errorText = await groqResponse.text();
       lastStatus = groqResponse.status;
       lastError = `Groq API Error (${groqResponse.status}) [model: ${model}]: ${errorText}`;
-      
-      // If client error that isn't rate-limiting (e.g. 400 Bad Request), don't retry other models
-      if (groqResponse.status >= 400 && groqResponse.status < 500 && groqResponse.status !== 429) {
-        break;
-      }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
       lastError = `Server Error [model: ${model}]: ${message}`;
