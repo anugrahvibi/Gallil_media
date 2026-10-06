@@ -3,6 +3,8 @@ import { NextRequest } from "next/server";
 const PASSWORD = process.env.GROQ_PROXY_PASS || "321";
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
+const GROQ_MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
+
 async function queryGroq(prompt: string): Promise<Response> {
   if (!GROQ_API_KEY) {
     return new Response(
@@ -21,7 +23,7 @@ async function queryGroq(prompt: string): Promise<Response> {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "llama-3.3-70b-versatile",
+          model: GROQ_MODEL,
           messages: [
             {
               role: "system",
