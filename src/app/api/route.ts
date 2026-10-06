@@ -7,7 +7,6 @@ const PRIMARY_MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
 const FALLBACK_MODELS = [
   PRIMARY_MODEL,
   "llama-3.1-8b-instant",
-  "llama-3.3-70b-versatile",
 ].filter((v, i, a) => a.indexOf(v) === i); // deduplicate
 
 async function queryGroq(prompt: string): Promise<Response> {
