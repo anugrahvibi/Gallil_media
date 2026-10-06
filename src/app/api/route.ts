@@ -3,7 +3,12 @@ import { NextRequest } from "next/server";
 const PASSWORD = process.env.GROQ_PROXY_PASS || "321";
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
-const GROQ_MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
+const PRIMARY_MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
+const FALLBACK_MODELS = [
+  PRIMARY_MODEL,
+  "llama-3.3-70b-versatile",
+  "llama-3.1-8b-instant",
+].filter((v, i, a) => a.indexOf(v) === i); // deduplicate
 
 async function queryGroq(prompt: string): Promise<Response> {
   if (!GROQ_API_KEY) {
@@ -13,58 +18,70 @@ async function queryGroq(prompt: string): Promise<Response> {
     );
   }
 
-  try {
-    const groqResponse = await fetch(
-      "https://api.groq.com/openai/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${GROQ_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: GROQ_MODEL,
-          messages: [
-            {
-              role: "system",
-              content:
-                "You are an ultra-fast, concise coding assistant designed for terminal CLI output. Provide direct, clean code and succinct explanations suitable for display in a Linux/Unix terminal.",
-            },
-            {
-              role: "user",
-              content: prompt,
-            },
-          ],
-          temperature: 0.5,
-        }),
+  let lastError: string = "Unknown error";
+  let lastStatus: number = 500;
+
+  for (const model of FALLBACK_MODELS) {
+    try {
+      const groqResponse = await fetch(
+        "https://api.groq.com/openai/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${GROQ_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model,
+            messages: [
+              {
+                role: "system",
+                content:
+                  "You are an ultra-fast, concise coding assistant designed for terminal CLI output. Provide direct, clean code and succinct explanations suitable for display in a Linux/Unix terminal.",
+              },
+              {
+                role: "user",
+                content: prompt,
+              },
+            ],
+            temperature: 0.5,
+          }),
+          signal: AbortSignal.timeout(15000),
+        }
+      );
+
+      if (groqResponse.ok) {
+        const data = await groqResponse.json();
+        const answer = data.choices?.[0]?.message?.content || "No response received.";
+
+        return new Response(answer + "\n", {
+          status: 200,
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8",
+            "Cache-Control": "no-store, no-cache, must-revalidate",
+          },
+        });
       }
-    );
 
-    if (!groqResponse.ok) {
+      // If rate limited or server error, record error and try fallback model
       const errorText = await groqResponse.text();
-      return new Response(`Groq API Error (${groqResponse.status}): ${errorText}\n`, {
-        status: groqResponse.status,
-        headers: { "Content-Type": "text/plain; charset=utf-8" },
-      });
+      lastStatus = groqResponse.status;
+      lastError = `Groq API Error (${groqResponse.status}) [model: ${model}]: ${errorText}`;
+      
+      // If client error that isn't rate-limiting (e.g. 400 Bad Request), don't retry other models
+      if (groqResponse.status >= 400 && groqResponse.status < 500 && groqResponse.status !== 429) {
+        break;
+      }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      lastError = `Server Error [model: ${model}]: ${message}`;
     }
-
-    const data = await groqResponse.json();
-    const answer = data.choices?.[0]?.message?.content || "No response received.";
-
-    return new Response(answer + "\n", {
-      status: 200,
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Cache-Control": "no-store, no-cache, must-revalidate",
-      },
-    });
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : String(err);
-    return new Response(`Server Error: ${message}\n`, {
-      status: 500,
-      headers: { "Content-Type": "text/plain; charset=utf-8" },
-    });
   }
+
+  return new Response(`${lastError}\n`, {
+    status: lastStatus,
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+  });
 }
 
 export async function POST(req: NextRequest) {
