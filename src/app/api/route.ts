@@ -7,7 +7,7 @@ const PRIMARY_MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
 const FALLBACK_MODELS = [
   PRIMARY_MODEL,
   "llama-3.1-8b-instant",
-  "gemma2-9b-it",
+  "llama-3.3-70b-versatile",
 ].filter((v, i, a) => a.indexOf(v) === i); // deduplicate
 
 async function queryGroq(prompt: string): Promise<Response> {
@@ -22,54 +22,66 @@ async function queryGroq(prompt: string): Promise<Response> {
   let lastStatus: number = 500;
 
   for (const model of FALLBACK_MODELS) {
-    try {
-      const groqResponse = await fetch(
-        "https://api.groq.com/openai/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${GROQ_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model,
-            messages: [
-              {
-                role: "system",
-                content:
-                  "You are an ultra-fast, concise coding assistant designed for terminal CLI output. Provide direct, clean code and succinct explanations suitable for display in a Linux/Unix terminal.",
-              },
-              {
-                role: "user",
-                content: prompt,
-              },
-            ],
-            temperature: 0.5,
-          }),
-          signal: AbortSignal.timeout(15000),
+    // Attempt with 1 immediate retry on 429 (rate-limit backoff)
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const groqResponse = await fetch(
+          "https://api.groq.com/openai/v1/chat/completions",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${GROQ_API_KEY}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model,
+              messages: [
+                {
+                  role: "system",
+                  content:
+                    "You are an ultra-fast, concise coding assistant designed for terminal CLI output. Provide direct, clean code and succinct explanations suitable for display in a Linux/Unix terminal.",
+                },
+                {
+                  role: "user",
+                  content: prompt,
+                },
+              ],
+              temperature: 0.5,
+            }),
+            signal: AbortSignal.timeout(15000),
+          }
+        );
+
+        if (groqResponse.ok) {
+          const data = await groqResponse.json();
+          const answer = data.choices?.[0]?.message?.content || "No response received.";
+
+          return new Response(answer + "\n", {
+            status: 200,
+            headers: {
+              "Content-Type": "text/plain; charset=utf-8",
+              "Cache-Control": "no-store, no-cache, must-revalidate",
+            },
+          });
         }
-      );
 
-      if (groqResponse.ok) {
-        const data = await groqResponse.json();
-        const answer = data.choices?.[0]?.message?.content || "No response received.";
+        const errorText = await groqResponse.text();
+        lastStatus = groqResponse.status;
+        lastError = `Groq API Error (${groqResponse.status}) [model: ${model}]: ${errorText}`;
 
-        return new Response(answer + "\n", {
-          status: 200,
-          headers: {
-            "Content-Type": "text/plain; charset=utf-8",
-            "Cache-Control": "no-store, no-cache, must-revalidate",
-          },
-        });
+        // If rate-limited (429), wait 600ms before second attempt
+        if (groqResponse.status === 429 && attempt === 0) {
+          await new Promise((r) => setTimeout(r, 600));
+          continue;
+        }
+
+        // For non-429 errors or second attempt, move to next model
+        break;
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : String(err);
+        lastError = `Server Error [model: ${model}]: ${message}`;
+        break;
       }
-
-      // If failed (rate limit, model not found, overload, etc.), log and try next fallback
-      const errorText = await groqResponse.text();
-      lastStatus = groqResponse.status;
-      lastError = `Groq API Error (${groqResponse.status}) [model: ${model}]: ${errorText}`;
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : String(err);
-      lastError = `Server Error [model: ${model}]: ${message}`;
     }
   }
 
