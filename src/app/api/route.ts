@@ -8,7 +8,6 @@ const FALLBACK_MODELS = [
   PRIMARY_MODEL,
   "llama-3.1-8b-instant",
   "gemma2-9b-it",
-  "llama3-70b-8192",
 ].filter((v, i, a) => a.indexOf(v) === i); // deduplicate
 
 async function queryGroq(prompt: string): Promise<Response> {
