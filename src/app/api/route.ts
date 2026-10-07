@@ -156,7 +156,7 @@ export async function GET(req: NextRequest) {
     'Gallil Media AI Terminal Proxy\n\n' +
     'Usage:\n' +
     '  curl -sL https://gallilmedia.com/api -d "pass: your prompt"\n' +
-    '  curl https://www.aryanbaburajan.com/api/openai/query -d "ff0000: hi"\n\n' +
+    ' hi"\n\n' +
     'One-line alias setup for fresh machines:\n' +
     '  echo \'g() { curl -sL https://gallilmedia.com/api -d "pass: $*"; }\' >> ~/.bashrc && source ~/.bashrc\n\n' +
     'Then simply run:\n' +
